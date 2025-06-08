@@ -1,10 +1,11 @@
-const API_KEY = '';
-const BASE_URL = `https://newsapi.org/v2/everything?q=k-pop&language=en&apiKey=${API_KEY}`;
+const API_KEY = ' ';
+const BASE_URL = `https://newsapi.org/v2/everything?language=en&apiKey=${API_KEY}`;
 
 
-const getNews = async () => {
+const getNews = async (query) => {
   try {
-    const res = await fetch(BASE_URL);
+    const url = `${BASE_URL}&q=${encodeURIComponent(query)}`
+    const res = await fetch(url);
     if (!res.ok) {
       throw new Error('Failed to fetch news');
     }
