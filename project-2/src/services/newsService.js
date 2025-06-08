@@ -13,7 +13,7 @@ const getNews = async (query) => {
     return data;
   } catch (err) {
     console.error('Error fetching news:', err);
-    return {articles: []};
+    return {articles: []}; 
   }
 };
 

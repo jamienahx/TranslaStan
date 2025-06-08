@@ -26,11 +26,13 @@ const App = () => {
   <>
  <h1>Kpop News</h1>
  <SearchBar onSearch={fetchNews}/>
- <NewsList articles={displayedNews} />
- <TextHighlighter/>
+ <Routes>
+  <Route path = "/" element = {<NewsList articles = {displayedNews}/>}/>
+ <Route path = "/articles/:id" element = {<ArticlePage articles ={displayedNews}/>} />
+ </Routes>
 </>
- )
+ );
 
-}
+};
 
 export default App

@@ -1,43 +1,50 @@
-//state for storing text and popup posn
-//useeffect for setting up the event listener on the whole page. Trigger some function when the user mouses up 
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import TranslationPopup from '../TranslationPopup/TranslationPopup.jsx';
 
-const TextHighlighter = () => {
-const [selectedText, setSelectedText] = useState('');
-const [popupPosition, setPopupPosition] = useState(null);
+const TextHighlighter = (props) => {
+  const [selectedText, setSelectedText] = useState('');
+  const [popupPosition, setPopupPosition] = useState(null);
 
+  useEffect(() => {
+    const handleMouseUp = (event) => {
+      const selection = window.getSelection();
+      const text = selection.toString().trim();
 
-useEffect(()=> {
-    const handleMouseUp=(event) =>{
-    const selection = window.getSelection();  //get what user selected
-    const text = selection.toString().trim();   //convert everything to plain text with no html, no formatting no bold, italics
-    if (text) {
+      if (text) {
+        const rect = selection.getRangeAt(0).getBoundingClientRect();
         setSelectedText(text);
-        const rect = selection.getRangeAt(0).getBoundingClientRect(); //getrangeat(0) to get the selected range, so that the popup posn can be determined.
-        setPopupPosition ({
-            top: rect.top,
-            left: rect.left,
-            });
-        }else {
-            setSelectedText('');
-            setPopupPosition(null);
-        }
+        setPopupPosition({
+          top: rect.top + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+      } else {
+        setSelectedText('');
+        setPopupPosition(null);
+      }
     };
-    document.addEventListener('mouseup', handleMouseUp);
-    return() => {
-        document.removeEventListener('mouseup', handleMouseUp);
-    };
-}, []);
 
-    return (
-  <>
-    {selectedText && popupPosition && (
-      <div style={{ position: 'absolute', top: popupPosition.top, left: popupPosition.left, background: 'yellow' }}>
-        You have highlighted: {selectedText}
-      </div>
-    )}
-  </>
-)
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => document.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
+  const closePopup = () => {
+    setSelectedText('');
+    setPopupPosition(null);
+  };
+
+  return (
+    <>
+      {selectedText && popupPosition && (
+        <TranslationPopup
+            text={selectedText}
+  position={popupPosition}
+  articleTitle={props.articleTitle}
+  articleURL={props.articleURL}
+  onClose={closePopup}
+        />
+      )}
+    </>
+  );
 };
 
 export default TextHighlighter;
