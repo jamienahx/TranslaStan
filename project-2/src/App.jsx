@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 import * as newsService from './services/newsService.js';
 import NewsList from './components/NewsList/NewsList.jsx';
 import TextHighlighter from './components/TextHighlighter/TextHighlighter.jsx'
-import SearchBar from './components/SearchBar/SearchBar.jsx'
+import SearchBar from './components/SearchBar/SearchBar.jsx';
+import {Routes, Route } from 'react-router-dom';
+import ArticlePage from './components/ArticlePage/ArticlePage.jsx';
 const App = () => {
 
   const [newsData, setNewsData] = useState([]);      
