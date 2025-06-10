@@ -38,3 +38,23 @@ export async function saveTranslation(articleTitle, originalText, translatedText
     return null;
   }
 }
+
+//fetching translations
+
+export async function fetchTranslations() {
+  try {
+    const response = await fetch(BASE_URL, {
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch translations');
+    }
+
+    const data = await response.json();
+    return data.records; // Airtable returns an array of "records"
+  } catch (error) {
+    console.error('Error fetching translations', error);
+    return [];
+  }
+}

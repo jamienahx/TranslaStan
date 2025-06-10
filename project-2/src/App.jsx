@@ -34,7 +34,7 @@ const App = () => {
  <SearchBar onSearch={fetchNews}/>
  <Routes>
   <Route path = "/" element = {<NewsList articles = {displayedNews}/>}/> {/*a. articles are passed down to newsList component */}
- <Route path = "/articles/:id" element = {<ArticlePage articles ={displayedNews}/>} />
+ <Route path = "/articles/:id" element = {<ArticlePage articles ={displayedNews}/>} /> {/* take displayed news and pass it as a prop called articles */}
  <Route path = "/word-bank" element = {<WordBank/>} />
  </Routes>
 </>
