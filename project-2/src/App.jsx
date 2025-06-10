@@ -6,6 +6,11 @@ import TextHighlighter from './components/TextHighlighter/TextHighlighter.jsx'
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import {Routes, Route } from 'react-router-dom';
 import ArticlePage from './components/ArticlePage/ArticlePage.jsx';
+import NavBar from './components/NavBar/NavBar.jsx';
+import WordBank from './components/WordBank/WordBank.jsx';
+import './app.css';
+
+
 const App = () => {
 
   const [newsData, setNewsData] = useState([]);      
@@ -14,7 +19,7 @@ const App = () => {
   const fetchNews = async (query) => {
      const data = await newsService.getNews(query);
      const articles = data.articles || [];
-     setDisplayedNews(articles);
+     setDisplayedNews(articles); //a. fetched articles are stored in this state. 
 
   }
 
@@ -24,11 +29,13 @@ const App = () => {
 
   return (
   <>
+  <NavBar/>
  <h1>Kpop News</h1>
  <SearchBar onSearch={fetchNews}/>
  <Routes>
-  <Route path = "/" element = {<NewsList articles = {displayedNews}/>}/>
+  <Route path = "/" element = {<NewsList articles = {displayedNews}/>}/> {/*a. articles are passed down to newsList component */}
  <Route path = "/articles/:id" element = {<ArticlePage articles ={displayedNews}/>} />
+ <Route path = "/word-bank" element = {<WordBank/>} />
  </Routes>
 </>
  );

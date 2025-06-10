@@ -1,38 +1,33 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import './NewsList.css'; // Make sure this path is correct
 
 const NewsList = (props) => {
-//check if there are any articles fetched . if no articles in props or article length is 0.
+  const articles = props.articles;
 
-if(!props.articles || props.articles.length===0) {
+  if (!articles || articles.length === 0) {
+    return <p>No news available</p>;
+  }
 
- return<p>No news available</p>
-
-}
-
-return (
-
-    <ul>
-        {props.articles.map((article,index) => (
-
-            <li key = {article.url || index}>
-                <h3>{article.title}</h3>
-                <p>{article.description}</p>
-                <a href = {article.url} target = "_blank" rel="noopener noreferrer">
-                {article.url}
-                </a>
-                {' '}
-                <Link to = {`/articles/${index}`}>
-                <button>Read More</button>
-                </Link>
-            </li>
-
-        ))}
-
-    </ul>
-
-
-);
-
+  return (
+    <div className="news-list">
+      {articles.map((article, index) => (
+        <div key={article.url || index} className="news-card">
+          <h3>{article.title}</h3>
+          <p>{article.description}</p>
+          <a href={article.url} target="_blank" rel="noopener noreferrer">
+            {article.url}
+          </a>
+          <div className="news-buttons">
+            <a href={article.url} target="_blank" rel="noopener noreferrer">
+            </a>
+            <Link to={`/articles/${index}`}>
+              <button>Read More</button>
+            </Link>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default NewsList;
