@@ -38,6 +38,23 @@ const WordBank = () => {
     return <p>No translations found.</p>;
   }
 
+//grouping functionality
+const groupedTranslations = translations.reduce((groups,record)=> {
+
+
+  const title = record.fields['Article Title']||'Untitled Article';
+
+  if(!groups[title]) {
+    groups[title] = [];
+  }
+  groups[title].push(record);
+  return groups;
+
+}, {})
+
+
+
+
   const handleDelete = async (recordId) => {
 
     const result = await deleteTranslation(recordId);
@@ -84,11 +101,20 @@ const WordBank = () => {
     <div className="wordbank-container">
       <h2>Saved Translations</h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      {/*grouped by articles, wrap  the whole rendering with this*/}
+
+      {Object.entries(groupedTranslations).map(([articleTitle,records]) => (
+      <div key = {articleTitle} className = "article-group">
+      <h3>{articleTitle}</h3>
       {/*error message for failed deletions */}
      <ul className="translation-list">
-        {translations.map((record) => (
+
+
+        {/*change the mapping to records because previously it is looping through ALL translations. records loops thru the current article group*/}
+        {records.map((record) => (
           <li key={record.id} className="translation-item">
-            <p><strong>Article Title:</strong> {record.fields['Article Title']}</p>
+            {/*removed the titles header from here because it is already showing upstairs*/}
             <p><strong>Original:</strong> {record.fields['Original Text']}</p>
             <p><strong>Translated:</strong> {record.fields['Translated Text']}</p>
             <a href={record.fields['Article URL']} target="_blank" rel="noopener noreferrer">
@@ -139,6 +165,9 @@ const WordBank = () => {
         ))}
       </ul>
     </div>
+  ))}
+  {/*grouped by article ends*/}
+  </div>
   );
 };
 
