@@ -30,10 +30,17 @@ const App = () => {
   return (
   <>
   <NavBar/>
- <h1>Kpop News</h1>
- <SearchBar onSearch={fetchNews}/>
+ <h1>TranslaStan!</h1>
+ 
  <Routes>
-  <Route path = "/" element = {<NewsList articles = {displayedNews}/>}/> {/*a. articles are passed down to newsList component */}
+  <Route path = "/" 
+  element = {
+  <>
+  <SearchBar onSearch={fetchNews}/> {/*moved search bar into Routes so that it only appears in the homepage */}
+  <NewsList articles = {displayedNews} /> {/*a. articles are passed down to newsList component */}
+  </>
+  }
+  />
  <Route path = "/articles/:id" element = {<ArticlePage articles ={displayedNews}/>} />
  <Route path = "/word-bank" element = {<WordBank/>} />
  </Routes>

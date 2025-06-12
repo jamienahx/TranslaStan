@@ -13,6 +13,26 @@ const NewsList = (props) => {
       {articles.map((article, index) => (
         <div key={article.url || index} className="news-card">
           <h3>{article.title}</h3>
+
+
+          {/*adding the image here */}
+          {article.urlToImage && (
+
+              <img 
+
+              src = {article.urlToImage}
+              alt={article.title}
+          
+              />
+
+
+          )
+          }
+
+
+
+
+
           <p>{article.description}</p>
           <a href={article.url} target="_blank" rel="noopener noreferrer">
             {article.url}

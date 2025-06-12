@@ -1,6 +1,6 @@
-const AIRTABLE_BASE_ID = ' '
-const AIRTABLE_TABLE_NAME = 'krtranslations'
-const AIRTABLE_API_TOKEN = ' '
+const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
+const AIRTABLE_TABLE_NAME = 'krtranslations';
+const AIRTABLE_API_TOKEN = import.meta.env.VITE_AIRTABLE_API_TOKEN ;
 
 const BASE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
 

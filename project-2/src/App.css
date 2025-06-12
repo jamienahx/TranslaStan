@@ -48,3 +48,12 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  color: Black;
+  text-align: center;
+  margin-top: 5rem;
+}

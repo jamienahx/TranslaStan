@@ -1,53 +1,101 @@
 .wordbank-container {
-  padding: 20px;
+  padding: 2rem;
+}
+
+.article-group {
+  margin-bottom: 2rem;
 }
 
 .translation-list {
-  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   padding: 0;
+  list-style: none;
 }
 
 .translation-item {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+  background-color: #ffffff;
+  border: 3px solid hotpink;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #000;
 }
 
-.delete-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-top: 10px;
+.translation-item p {
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.translation-item a {
+  color: #000;
+  word-break: break-word;
+  margin-top: 0.5rem;
 }
 
 .comment-section {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-width: 400px; /* your desired width */
-  margin-left: auto;
-  margin-right: auto; /* centers the container horizontally */
-  align-items: center; 
+  margin-top: 1rem;
 }
 
-.comment-section textarea {
-  width: 100%; /* fills the container width */
+.comment-textarea {
+  width: 100%;
   min-height: 60px;
+  padding: 8px;
   box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 .comment-section button {
-  width: fit-content; /* shrink to fit content */
   background-color: #4CAF50;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.translation-item button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 10px;
 }
 
 .error-message {
   color: red;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+.article-group {
+  border: 2px solid hotpink;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #fff0f6; /* a very light pink background for subtle separation */
+  box-shadow: 0 4px 8px rgba(255, 105, 180, 0.15); /* soft pink shadow for depth */
+}
+
+.translation-item a {
+  color: hotpink;           /* Match your theme's pink color */
+  text-decoration: none;    /* Remove underline */
+  font-weight: 600;         /* Slightly bolder */
+  transition: color 0.3s ease;
+}
+
+.translation-item a:hover {
+  color: #ff69b4;           /* Lighter pink on hover */
+  text-decoration: underline;
 }

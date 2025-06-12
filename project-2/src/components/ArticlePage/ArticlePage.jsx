@@ -14,6 +14,11 @@ const ArticlePage = (props) => {
   return (
     <div className="article-card">
       <h2>{article.title}</h2>
+      {/*image goes here */}
+      <img 
+      src ={article.urlToImage}
+      alt = {article.title}
+      />
       <p>{article.content || article.description}</p>
       <a href={article.url} target="_blank" rel="noopener noreferrer">
         Read original article

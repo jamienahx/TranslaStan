@@ -24,7 +24,7 @@ const WordBank = () => {
         
       } );
       setComments(initialComments);    
-      setCommentInputs(initialComments);  
+      setCommentInputs({});  //make sure the comment box is empty
     };
 
     loadTranslations();
@@ -38,16 +38,16 @@ const WordBank = () => {
     return <p>No translations found.</p>;
   }
 
-//grouping functionality
+//grouping functionality --> reduce will transform the array of translations into a grouped object 
 const groupedTranslations = translations.reduce((groups,record)=> {
 
 
-  const title = record.fields['Article Title']||'Untitled Article';
+  const title = record.fields['Article Title']||'Untitled Article';   //gets the article title
 
-  if(!groups[title]) {
+  if(!groups[title]) {  //if the title hasn't appeared before  create  a new array
     groups[title] = [];
   }
-  groups[title].push(record);
+  groups[title].push(record); //adds the current record into the correct group 
   return groups;
 
 }, {})
@@ -102,11 +102,13 @@ const groupedTranslations = translations.reduce((groups,record)=> {
       <h2>Saved Translations</h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {/*grouped by articles, wrap  the whole rendering with this*/}
+      {/*grouped by articles, wrap  the whole rendering with this. took the groupedtranslations object and converted it to an array of key-value.
+      Each article group gets its own div*/ }
 
       {Object.entries(groupedTranslations).map(([articleTitle,records]) => (
-      <div key = {articleTitle} className = "article-group">
-      <h3>{articleTitle}</h3>
+        
+      <div key = {articleTitle} className = "article-group"> 
+      <h3>Title: {articleTitle}</h3>
       {/*error message for failed deletions */}
      <ul className="translation-list">
 
@@ -118,7 +120,7 @@ const groupedTranslations = translations.reduce((groups,record)=> {
             <p><strong>Original:</strong> {record.fields['Original Text']}</p>
             <p><strong>Translated:</strong> {record.fields['Translated Text']}</p>
             <a href={record.fields['Article URL']} target="_blank" rel="noopener noreferrer">
-              View Article
+              View Original Article
             </a>
             
               {/*field for updating comments */}
