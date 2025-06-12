@@ -1,4 +1,4 @@
-const AIRTABLE_BASE_ID = ' '
+const AIRTABLE_BASE_ID = ''
 const AIRTABLE_TABLE_NAME = 'krtranslations'
 const AIRTABLE_API_TOKEN = ' '
 
@@ -56,5 +56,26 @@ export async function fetchTranslations() {
   } catch (error) {
     console.error('Error fetching translations', error);
     return [];
+  }
+}
+
+//deletion function
+
+export async function deleteTranslation(recordId) {
+  try {
+    const response = await fetch(`${BASE_URL}/${recordId}`, {
+      method: 'DELETE',
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete translation');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error deleting translation', error);
+    return null;
   }
 }
