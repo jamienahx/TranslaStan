@@ -1,18 +1,30 @@
 // src/components/WordBank/WordBank.jsx
 import { useEffect, useState } from 'react';
-import { fetchTranslations, deleteTranslation} from '../../services/airtableService'; 
+import { fetchTranslations, deleteTranslation, updateComment} from '../../services/airtableService'; 
+import './WordBank.css';
 
 const WordBank = () => {
   const [translations, setTranslations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  //in case translation fails
+  const [comments, setComments] = useState({});
+  const [commentInputs, setCommentInputs]= useState({});
+  
 
   useEffect(() => {
     const loadTranslations = async () => {
       setLoading(true);
       const data = await fetchTranslations();
-      setTranslations(data);
+      setTranslations(data);    //stores the fetched translations into the 'translations' state
       setLoading(false);
+      
+      const initialComments = {};  //empty object first
+      data.forEach((record)=> {   //loops through each translation record
+        initialComments[record.id] = record.fields['Comment']|| "";  //each record will be set with record ID which is the key and the value is the comment, if no comment then blank
+        
+      } );
+      setComments(initialComments);    
+      setCommentInputs(initialComments);  
     };
 
     loadTranslations();
@@ -26,37 +38,90 @@ const WordBank = () => {
     return <p>No translations found.</p>;
   }
 
-  const handleDelete = async (recordID) => {
+  const handleDelete = async (recordId) => {
 
-    const result = await deleteTranslation(recordID);
+    const result = await deleteTranslation(recordId);
     if(result) {
-      setTranslations((prev)=>prev.filter((record)=>record.id!==recordID));
+      setTranslations((prev)=>prev.filter((record)=>record.id!==recordId));
       setErrorMessage('');
     } else {
 
       setErrorMessage('Failed to delete');
     }
 
-
-
   };
 
+  //comments related
+
+  const handleCommentInputChange = (recordId, value) => {
+    setCommentInputs((prev)=> ({
+      ...prev,
+      [recordId]: value,
+    }));
+  };
+
+  const handleCommentSave = async (recordId) => {
+    const comment = commentInputs[recordId];
+    const result = await updateComment(recordId, comment);
+    if (!result) {
+      setErrorMessage('Failed to save comment.');
+      } else {
+        setErrorMessage('');
+        //clear the comments 
+        setComments((prev)=> ({...prev,
+          [recordId]: comment,
+        }));
+
+        setCommentInputs((prev) => ({
+          ...prev,
+          [recordId]: '',
+        }));
+      }
+  };
+
+
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="wordbank-container">
       <h2>Saved Translations</h2>
-      {errorMessage && (
-      <p style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</p>
-    )}   {/*error message for failed deletions */}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {/*error message for failed deletions */}
+     <ul className="translation-list">
         {translations.map((record) => (
-          <li key={record.id} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
+          <li key={record.id} className="translation-item">
             <p><strong>Article Title:</strong> {record.fields['Article Title']}</p>
             <p><strong>Original:</strong> {record.fields['Original Text']}</p>
             <p><strong>Translated:</strong> {record.fields['Translated Text']}</p>
             <a href={record.fields['Article URL']} target="_blank" rel="noopener noreferrer">
               View Article
             </a>
-            <br />
+            
+              {/*field for updating comments */}
+              <div className="comment-section">
+              {comments[record.id] && (
+                <p><strong>Saved Comment:</strong>{comments[record.id]}</p>  
+
+              )}
+              <textarea 
+
+              value = {commentInputs[record.id] || ''}
+              onChange={(event) => handleCommentInputChange(record.id,event.target.value)}
+              placeholder = "Add a comment..."
+                className="comment-textarea"
+               />
+               {/*button goes here*/}
+               <button 
+               onClick = {() => handleCommentSave(record.id)}
+               style={{
+                backgroundColor: '#4CAF50',
+                color: 'white',
+                border: 'none',
+                padding: '5px 10px',
+                cursor: 'pointer',
+                marginTop: '5px'
+        }}
+          >Save Comment</button>
+          </div>
+          <br />
             <button
               onClick={() => handleDelete(record.id)}
               style={{
@@ -68,7 +133,7 @@ const WordBank = () => {
                 marginTop: '10px'
               }}
             >
-              Delete
+              Delete Entry
             </button>
           </li>
         ))}

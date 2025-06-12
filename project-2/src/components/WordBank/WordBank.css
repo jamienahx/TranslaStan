@@ -1,0 +1,53 @@
+.wordbank-container {
+  padding: 20px;
+}
+
+.translation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.translation-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 400px; /* your desired width */
+  margin-left: auto;
+  margin-right: auto; /* centers the container horizontally */
+  align-items: center; 
+}
+
+.comment-section textarea {
+  width: 100%; /* fills the container width */
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+.comment-section button {
+  width: fit-content; /* shrink to fit content */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}

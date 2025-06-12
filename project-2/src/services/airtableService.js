@@ -1,4 +1,4 @@
-const AIRTABLE_BASE_ID = ''
+const AIRTABLE_BASE_ID = ' '
 const AIRTABLE_TABLE_NAME = 'krtranslations'
 const AIRTABLE_API_TOKEN = ' '
 
@@ -78,4 +78,33 @@ export async function deleteTranslation(recordId) {
     console.error('Error deleting translation', error);
     return null;
   }
+}
+
+//update with comments
+
+export async function updateComment (recordId, comment) {
+const body = {
+
+  fields : { 
+    'Comment': comment,
+
+  },
+};
+
+try {
+  const response = await fetch (`${BASE_URL}/${recordId}`, {
+
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify(body),
+  });
+
+  if(!response.ok) {
+    throw new Error('Failed to update comment')
+  }
+  return await response.json();
+} catch (error) {
+  console.error('Error updating comment', error);
+  return null;
+}
 }
