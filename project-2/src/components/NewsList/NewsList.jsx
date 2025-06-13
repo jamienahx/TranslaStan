@@ -34,10 +34,11 @@ const NewsList = (props) => {
 
 
           <p>{article.description}</p>
-          <a href={article.url} target="_blank" rel="noopener noreferrer">
-            {article.url}
-          </a>
           <div className="news-buttons">
+            <a href={article.url} target="_blank" rel="noopener noreferrer">
+              <button className="url-button">Visit Site</button>
+            </a>
+
             <a href={article.url} target="_blank" rel="noopener noreferrer">
             </a>
             <Link to={`/articles/${index}`}>

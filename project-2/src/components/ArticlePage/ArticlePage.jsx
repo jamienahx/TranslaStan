@@ -12,8 +12,12 @@ const ArticlePage = (props) => {
   }
 
   return (
+    <div> <p className="instruction-text">
+      Highlight any text to see its translation and save it!
+    </p>
     <div className="article-card">
       <h2>{article.title}</h2>
+
       {/*image goes here */}
       <img 
       src ={article.urlToImage}
@@ -24,6 +28,7 @@ const ArticlePage = (props) => {
         Read original article
       </a>
       <TextHighlighter articleTitle={article.title} articleURL={article.url} />
+    </div>
     </div>
   );
 };

@@ -6,9 +6,9 @@ const TranslationPopup = (props) => {
   const [loading, setLoading] = useState(false);
   const [saveStatus, setSaveStatus] = useState('');
 
-  // Use default values if props.sourceLang or props.targetLang are not provided
-  const sourceLang = props.sourceLang || 'en';
-  const targetLang = props.targetLang || 'ko';
+ //set default values here
+  const sourceLang =  'en';
+  const targetLang =  'ko';
 
   useEffect(() => {
     if (!props.text) return; //text received from parent. if none, end.
@@ -29,7 +29,7 @@ const TranslationPopup = (props) => {
     };
 
     translate();  //call the translate function
-  }, [props.text, sourceLang, targetLang]); //the moment any one value changes, run translate
+  }, [props.text]); //run when props.text changes
 
 
 const handleSave = async () => {
@@ -58,12 +58,12 @@ const handleSave = async () => {
     <div
       style={{
         position: 'absolute',
-        top: props.position.top + 20,
+        top: props.position.top,
         left: props.position.left,
         background: 'yellow',
         padding: '10px',
         borderRadius: '6px',
-        maxWidth: '300px',
+        width: '200px',
         zIndex: 1000,
         boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
       }}

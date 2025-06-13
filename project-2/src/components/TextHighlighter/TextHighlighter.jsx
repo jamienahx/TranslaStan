@@ -14,8 +14,8 @@ const TextHighlighter = (props) => {
         const rect = selection.getRangeAt(0).getBoundingClientRect();
         setSelectedText(text);
         setPopupPosition({
-          top: rect.top + window.scrollY,
-          left: rect.left + window.scrollX,
+          top: rect.top + 30,
+          left: rect.left + 10,
         });
       } else {
         setSelectedText('');

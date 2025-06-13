@@ -1,5 +1,9 @@
 .wordbank-container {
   padding: 2rem;
+ 
+}
+.wordbank-container h2 {
+  margin-top: 0;
 }
 
 .article-group {

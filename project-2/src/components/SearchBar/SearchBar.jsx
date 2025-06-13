@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const SearchBar = ({ onSearch}) => {
+const SearchBar = ( props ) => {
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -8,9 +8,9 @@ const SearchBar = ({ onSearch}) => {
         event.preventDefault();
         const trimmed = searchTerm.trim();
         if(trimmed) {
-            onSearch(trimmed);
+            props.onSearch(trimmed);  //send this search term that user has typed in the field back to the parent
         } else {
-            onSearch('kpop');//default callback
+            props.onSearch('kpop');//default callback
         }
 
     };

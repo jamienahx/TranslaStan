@@ -111,8 +111,6 @@ const groupedTranslations = translations.reduce((groups,record)=> {
       <h3>Title: {articleTitle}</h3>
       {/*error message for failed deletions */}
      <ul className="translation-list">
-
-
         {/*change the mapping to records because previously it is looping through ALL translations. records loops thru the current article group*/}
         {records.map((record) => (
           <li key={record.id} className="translation-item">
